@@ -86,8 +86,6 @@ void printWindowEvent(const SDL_Event *event);
 
 int main(int argc, char* argv[])
 {
-	// test commit
-
 	struct App app = {
 		.window = NULL,
 		.renderer = NULL,
