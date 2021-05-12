@@ -86,6 +86,8 @@ void printWindowEvent(const SDL_Event *event);
 
 int main(int argc, char* argv[])
 {
+	// testing ssh
+
 	struct App app = {
 		.window = NULL,
 		.renderer = NULL,
