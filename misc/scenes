@@ -1,0 +1,27 @@
+
+
+
+
+loading
+	finish loading -> main menu
+	
+main menu
+	new game -> opening level
+	load game -> world map
+	option -> options menu
+
+world map
+	select level -> level
+	pause -> pause menu
+
+
+level
+	beat level -> world map
+	die -> game over
+	pause -> pause menu
+
+pause
+	options -> options menu
+	quit -> main menu
+
+options menu
