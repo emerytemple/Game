@@ -84,8 +84,83 @@ void printMouseWheelEvent(const SDL_Event *event);
 
 void printWindowEvent(const SDL_Event *event);
 
+////
+
+struct Stack {
+	int size;
+	int top;
+	struct Scene *scenes;
+	float *items;
+};
+
+struct Stack *newStack(int capacity)
+{
+	struct Stack *s = (struct Stack*)malloc(sizeof(struct Stack));
+
+	s->size = capacity;
+	s->top = -1;
+	s->items = (float *)malloc(sizeof(float) * capacity);
+
+	return s;
+}
+
+int size(struct Stack *s)
+{
+	return s->top + 1;
+}
+
+bool isEmpty(struct Stack *s)
+{
+	return s->top == -1;
+}
+
+void push(struct Stack *s, float item)
+{
+	s->items[++s->top] = item;
+}
+
+float peek(struct Stack *s)
+{
+	if(!isEmpty(s)) {
+		return s->items[s->top];
+	}
+}
+
+float pop(struct Stack *s)
+{
+	if(isEmpty(s)) {
+		printf("can't pop, empty stack");
+	}
+
+	return s->items[s->top--];
+}
+
+////
+
 int main(int argc, char* argv[])
 {
+
+	struct Stack *s = newStack(5);
+	push(s, 1.1);
+	push(s, 2.2);
+	push(s, 3.3);
+
+	printf("The top element is %f\n", peek(s));
+	printf("The stack size is %d\n", size(s));
+
+	float a = pop(s);
+	float b = pop(s);
+	float c = pop(s);
+
+	printf("%f  %f  %f\n", a, b, c);
+
+	if(isEmpty(s)) {
+		printf("empty\n");
+	}
+	else {
+		printf("not empty\n");
+	}
+
 	struct App app = {
 		.window = NULL,
 		.renderer = NULL,
@@ -128,7 +203,7 @@ int main(int argc, char* argv[])
 		}
 
 		// input
-		printf("controller = %d  %d\n", app.controllerAxisState, app.controllerState);
+		// printf("controller = %d  %d\n", app.controllerAxisState, app.controllerState);
 
 		// update
 		u32 up = (app.controllerState >> SDL_CONTROLLER_BUTTON_DPAD_UP) & 1U;

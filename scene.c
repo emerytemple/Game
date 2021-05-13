@@ -2,7 +2,9 @@
 
 #include <stdio.h>
 
-void testprint()
+/*
+void initSceneManager(Scene *scenes, int numScenes)
 {
-	printf("hello world\n");
+
 }
+*/
