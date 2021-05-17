@@ -1,39 +1,75 @@
 
-#ifndef _SCENE_H_
-#define _SCENE_H_
+#ifndef SCENE_H
+#define SCENE_H
 
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
-struct SceneManager {
-	const int numScenes;
-	const struct Scene *scenes;
+struct sceneStack {
+	int size;
+	int top;
 
-	struct Scene *currentScene; // should this be an int, to use with an enum?
-	char *nextSceneName;
+	int *scenes;
 };
 
-// void initSceneManager(Scene *scenes, int numScenes);
+struct sceneStack *newSceneStack(int capacity);
+int size(struct sceneStack *s);
+bool isEmpty(struct sceneStack *s);
+void pushScene(struct sceneStack *s, int scene);
+int getCurrentScene(struct sceneStack *s);
+int popScene(struct sceneStack *s);
+void deleteSceneStack(struct sceneStack *s);
 
 struct Scene {
-	const char *name;
+	char *name;
+/*
+	void *data;
 
 	void (*start)(struct App *app, struct sceneManager *sm);
 	void (*update)(struct App *app, struct sceneManager *sm);
 	void (*render)(struct App *app, struct sceneManager *sm);
 	void (*end)(struct App *app, struct sceneManager *sm);
+	// printState();
+*/
 };
 
-struct Level {
+struct SceneManager {
+	int numScenes;
+	struct Scene *scenes;
+
+	int currentScene;
+	struct Stack *sceneStack;
 };
 
-void testprint();
-
-// init
-// input
-// update
-// render
-// close
+void printScenes(struct Scene *scenes, int numScenes);
 
 #endif
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// void initSceneManager(struct Scene *scenes, int size);
+
+// switch scene
+
+
+
+
+
+
+
+
 
 
 

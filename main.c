@@ -27,6 +27,12 @@ typedef double f64;
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 540;
 
+enum SCENE_NAME {
+	SCENE_BOOT,
+	SCENE_TITLE,
+	SCENE_GAME
+};
+
 enum AnalogInput {
 	CONTROLLER_AXIS_LEFT_UP,
 	CONTROLLER_AXIS_LEFT_DOWN,
@@ -84,75 +90,21 @@ void printMouseWheelEvent(const SDL_Event *event);
 
 void printWindowEvent(const SDL_Event *event);
 
-////
-
-struct Stack {
-	int size;
-	int top;
-	struct Scene *scenes;
-	float *items;
-};
-
-struct Stack *newStack(int capacity)
-{
-	struct Stack *s = (struct Stack*)malloc(sizeof(struct Stack));
-
-	s->size = capacity;
-	s->top = -1;
-	s->items = (float *)malloc(sizeof(float) * capacity);
-
-	return s;
-}
-
-int size(struct Stack *s)
-{
-	return s->top + 1;
-}
-
-bool isEmpty(struct Stack *s)
-{
-	return s->top == -1;
-}
-
-void push(struct Stack *s, float item)
-{
-	s->items[++s->top] = item;
-}
-
-float peek(struct Stack *s)
-{
-	if(!isEmpty(s)) {
-		return s->items[s->top];
-	}
-}
-
-float pop(struct Stack *s)
-{
-	if(isEmpty(s)) {
-		printf("can't pop, empty stack");
-	}
-
-	return s->items[s->top--];
-}
-
-////
-
 int main(int argc, char* argv[])
 {
+	struct sceneStack *s = newSceneStack(5);
+	pushScene(s, 11);
+	pushScene(s, 22);
+	pushScene(s, 33);
 
-	struct Stack *s = newStack(5);
-	push(s, 1.1);
-	push(s, 2.2);
-	push(s, 3.3);
-
-	printf("The top element is %f\n", peek(s));
+	printf("The top element is %d\n", getCurrentScene(s));
 	printf("The stack size is %d\n", size(s));
 
-	float a = pop(s);
-	float b = pop(s);
-	float c = pop(s);
+	int a = popScene(s);
+	int b = popScene(s);
+	int c = popScene(s);
 
-	printf("%f  %f  %f\n", a, b, c);
+	printf("%d  %d  %d\n", a, b, c);
 
 	if(isEmpty(s)) {
 		printf("empty\n");
@@ -160,6 +112,20 @@ int main(int argc, char* argv[])
 	else {
 		printf("not empty\n");
 	}
+
+	struct Scene scenes[] = {
+		{ .name = "boot" },
+		{ .name = "title" },
+		{ .name = "game" },
+	};
+
+	// initSceneManager(scenes, 3);
+	printScenes(scenes, 3);
+
+	struct SceneManager sm = {
+		.numScenes = 3,
+		.scenes = scenes,
+	};
 
 	struct App app = {
 		.window = NULL,
