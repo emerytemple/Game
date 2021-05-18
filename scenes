@@ -27,3 +27,54 @@ pause
 options menu
 
 error
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+jim said
+make me a new visit
+let him know
+he will make a new badge
+
+come up to 401
+mr kane will give it to me
+
+
+
+
+
+
+
+
+
+
+
+
+
+git init
+git add .
+git commit -m "first commit"
+git remote add origin https://github.com/emerytemple/Game.git
+git branch -M main
+git push -u origin main
+
+
+git add .
+git commit -m "test commit"
+git push -u origin main
+
+then follow:
+https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
+
+then:
+git config remote.origin.url "git@github.com:emerytemple/Game.git"

@@ -27,12 +27,6 @@ typedef double f64;
 const int SCREEN_WIDTH = 960;
 const int SCREEN_HEIGHT = 540;
 
-enum SCENE_NAME {
-	SCENE_BOOT,
-	SCENE_TITLE,
-	SCENE_GAME
-};
-
 enum AnalogInput {
 	CONTROLLER_AXIS_LEFT_UP,
 	CONTROLLER_AXIS_LEFT_DOWN,
@@ -92,40 +86,12 @@ void printWindowEvent(const SDL_Event *event);
 
 int main(int argc, char* argv[])
 {
-	struct sceneStack *s = newSceneStack(5);
-	pushScene(s, 11);
-	pushScene(s, 22);
-	pushScene(s, 33);
+	struct SceneManager sm;
 
-	printf("The top element is %d\n", getCurrentScene(s));
-	printf("The stack size is %d\n", size(s));
+	newSceneManager(&sm);
 
-	int a = popScene(s);
-	int b = popScene(s);
-	int c = popScene(s);
+	startScene(&sm, SCENE_BOOT);
 
-	printf("%d  %d  %d\n", a, b, c);
-
-	if(isEmpty(s)) {
-		printf("empty\n");
-	}
-	else {
-		printf("not empty\n");
-	}
-
-	struct Scene scenes[] = {
-		{ .name = "boot" },
-		{ .name = "title" },
-		{ .name = "game" },
-	};
-
-	// initSceneManager(scenes, 3);
-	printScenes(scenes, 3);
-
-	struct SceneManager sm = {
-		.numScenes = 3,
-		.scenes = scenes,
-	};
 
 	struct App app = {
 		.window = NULL,

@@ -2,9 +2,14 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include <stdio.h>
 #include <stdbool.h>
-#include <stdlib.h>
+
+enum SceneNames {
+	SCENE_BOOT,
+	SCENE_TITLE,
+	SCENE_GAME,
+	SCENE_LENGTH
+};
 
 struct sceneStack {
 	int size;
@@ -23,15 +28,14 @@ void deleteSceneStack(struct sceneStack *s);
 
 struct Scene {
 	char *name;
-/*
-	void *data;
 
-	void (*start)(struct App *app, struct sceneManager *sm);
-	void (*update)(struct App *app, struct sceneManager *sm);
-	void (*render)(struct App *app, struct sceneManager *sm);
-	void (*end)(struct App *app, struct sceneManager *sm);
+	// void *data;
+
+	void (*start)();
+	void (*update)();
+	void (*render)();
+	void (*end)();
 	// printState();
-*/
 };
 
 struct SceneManager {
@@ -39,10 +43,14 @@ struct SceneManager {
 	struct Scene *scenes;
 
 	int currentScene;
-	struct Stack *sceneStack;
+	struct sceneStack *sceneStack; // make enum array/stack?
+	// merge sceneStack into SceneManager?
 };
 
-void printScenes(struct Scene *scenes, int numScenes);
+void newSceneManager(struct SceneManager *sm);
+void startScene(struct SceneManager *sm, enum SceneNames scene);
+
+// void printScenes(struct Scene *scenes, int numScenes);
 
 #endif
 
@@ -59,7 +67,6 @@ void printScenes(struct Scene *scenes, int numScenes);
 
 
 
-// void initSceneManager(struct Scene *scenes, int size);
 
 // switch scene
 

@@ -1,4 +1,5 @@
-OBJS = main.o scene.o
+OBJS = main.o scene.o boot.o
+
 COMPILER_FLAGS = -Wall
 LINKER_FLAGS = -lSDL2 -lSDL2_image -lm
 
@@ -10,6 +11,9 @@ main.o:
 
 scene.o:
 	cc -c scene.c
+
+boot.o:
+	cc -c boot.c
 
 .PHONY: clean
 clean:
