@@ -88,9 +88,21 @@ int main(int argc, char* argv[])
 {
 	struct SceneManager sm;
 
-	newSceneManager(&sm);
+	newSceneManager(&sm, 5);
 
-	startScene(&sm, SCENE_BOOT);
+
+	pushScene(&sm, SCENE_BOOT);
+	// pushScene(&sm, SCENE_TITLE);
+	// pushScene(&sm, SCENE_GAME);
+	// popScene(&sm);
+	// switchScene(&sm, SCENE_BOOT);
+
+
+	// printStack(&sm);
+
+	// deleteSceneManager(&sm);
+	
+	// startScene(&sm, SCENE_BOOT);
 
 
 	struct App app = {
@@ -111,7 +123,7 @@ int main(int argc, char* argv[])
 		.rt = 0.0,
 	};
 
-	bool success = initApp(&app);
+	bool success = initApp(&app); // make this not explicitly fail if no controller connected
 	if(!success) {
 		printf("Failed to initialize!\n");
 		return 1;

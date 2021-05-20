@@ -4,64 +4,7 @@
 #include "scene.h"
 #include "boot.h"
 
-struct sceneStack *newSceneStack(int capacity)
-{
-	struct sceneStack *s = (struct sceneStack*)malloc(sizeof(struct sceneStack));
-
-	s->size = capacity;
-	s->top = -1;
-	s->scenes = (int *)malloc(sizeof(int) * capacity);
-
-	return s;
-}
-
-int size(struct sceneStack *s)
-{
-	return s->top + 1;
-}
-
-bool isEmpty(struct sceneStack *s)
-{
-	return s->top == -1;
-}
-
-void pushScene(struct sceneStack *s, int scene)
-{
-	s->scenes[++s->top] = scene;
-}
-
-int getCurrentScene(struct sceneStack *s) // peekScene
-{
-	if(!isEmpty(s)) {
-		return s->scenes[s->top];
-	}
-}
-
-int popScene(struct sceneStack *s)
-{
-	if(isEmpty(s)) {
-		printf("can't pop, empty stack");
-	}
-
-	return s->scenes[s->top--];
-}
-
-void deleteSceneStack(struct sceneStack *s)
-{
-	free(s->scenes);
-	free(s);
-}
-
-/*
-void printScenes(struct Scene *scenes, int numScenes)
-{
-	for(int i = 0; i < numScenes; ++i) {
-		printf("%s\n", scenes[i].name);
-	}
-}
-*/
-
-void newSceneManager(struct SceneManager *sm)
+void newSceneManager(struct SceneManager *sm, int capacity)
 {
 	// NOTE (emery): must be the same as SceneNames enum in scene.h
 	struct Scene scenes[] = {
@@ -79,13 +22,77 @@ void newSceneManager(struct SceneManager *sm)
 	sm->numScenes = SCENE_LENGTH;
 	sm->scenes = scenes;
 	
+	sm->maxSize = capacity;
+	sm->top = -1;
 	sm->currentScene = -1;
-	sm->sceneStack = newSceneStack(SCENE_LENGTH);
+	sm->stack = (enum SceneNames *)malloc(sizeof(enum SceneNames) * sm->maxSize);
 }
 
+int size(struct SceneManager *sm) {
+	return sm->top + 1;
+}
+
+bool isEmpty(struct SceneManager *sm)
+{
+	return sm->top == -1;
+}
+
+bool isFull(struct SceneManager *sm)
+{
+	return sm->top == sm->maxSize - 1;
+}
+
+void pushScene(struct SceneManager *sm, enum SceneNames newScene)
+{
+	if(isFull(sm)) { printf("scene stack overflow"); return; }
+
+	// check if stack is empty
+	
+	if(!isEmpty(sm)) {
+		int scene = sm->stack[sm->top];
+		sm->scenes[scene].end();
+	}
+
+	sm->stack[++sm->top] = newScene;
+	sm->currentScene = newScene;
+
+	sm->scenes[newScene].start();
+}
+
+void switchScene(struct SceneManager *sm, enum SceneNames scene)
+{
+	popScene(sm);
+	pushScene(sm, scene);
+}
+
+void popScene(struct SceneManager *sm)
+{
+	if(isEmpty(sm)) { printf("can't pop, empty stack");	}
+
+	sm->currentScene = --sm->top;
+}
+
+void deleteSceneManager(struct SceneManager *sm)
+{
+	free(sm->stack);
+	free(sm);
+}
+
+void printStack(struct SceneManager *sm)
+{
+	printf("max size = %d\n", sm->maxSize);
+	printf("top = %d\n", sm->top);
+	printf("current scene = %d\n", sm->currentScene);
+	for(int i = 0; i <= sm->top; ++i) {
+		int scene = sm->stack[i];
+		printf("%d  %s\n", i,sm->scenes[scene].name);
+	}
+}
+
+/*
 void startScene(struct SceneManager *sm, enum SceneNames scene)
 {
 	sm->currentScene = scene;
 	pushScene(sm->sceneStack, scene);
 }
-
+*/

@@ -1,3 +1,4 @@
+make clean
 git add .
-git commit -m "added boot, cleaned up scene"
+git commit -m "almost finished scene, cleaned up alex's tomfoolery"
 git push -u origin main

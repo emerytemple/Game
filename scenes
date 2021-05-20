@@ -2,79 +2,80 @@
 
 
 
-loading
-	finish loading -> main menu
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
-main menu
-	new game -> opening level
-	load game -> world map
-	option -> options menu
-
-world map
-	select level -> level
-	pause -> pause menu
-
-
-level
 	beat level -> world map
-	die -> game over
-	pause -> pause menu
-
-pause
-	options -> options menu
-	quit -> main menu
-
-options menu
-
-error
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-jim said
-make me a new visit
-let him know
-he will make a new badge
-
 come up to 401
-mr kane will give it to me
-
-
-
-
-
-
-
-
-
-
-
-
-
-git init
+	die -> game over
+error
+	finish loading -> main menu
 git add .
-git commit -m "first commit"
-git remote add origin https://github.com/emerytemple/Game.git
+git add .
 git branch -M main
-git push -u origin main
-
-
-git add .
+git commit -m "first commit"
 git commit -m "test commit"
-git push -u origin main
-
-then follow:
-https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
-
-then:
 git config remote.origin.url "git@github.com:emerytemple/Game.git"
+git init
+git push -u origin main
+git push -u origin main
+git remote add origin https://github.com/emerytemple/Game.git
+he will make a new badge
+https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
+jim said
+let him know
+level
+	load game -> world map
+loading
+main menu
+make me a new visit
+mr kane will give it to me
+	new game -> opening level
+	option -> options menu
+options menu
+	options -> options menu
+pause
+	pause -> pause menu
+	pause -> pause menu
+	quit -> main menu
+	select level -> level
+then:
+then follow:
+world map
+

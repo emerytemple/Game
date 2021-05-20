@@ -8,23 +8,8 @@ enum SceneNames {
 	SCENE_BOOT,
 	SCENE_TITLE,
 	SCENE_GAME,
-	SCENE_LENGTH
+	SCENE_LENGTH // change to SCENE_COUNT?
 };
-
-struct sceneStack {
-	int size;
-	int top;
-
-	int *scenes;
-};
-
-struct sceneStack *newSceneStack(int capacity);
-int size(struct sceneStack *s);
-bool isEmpty(struct sceneStack *s);
-void pushScene(struct sceneStack *s, int scene);
-int getCurrentScene(struct sceneStack *s);
-int popScene(struct sceneStack *s);
-void deleteSceneStack(struct sceneStack *s);
 
 struct Scene {
 	char *name;
@@ -42,94 +27,24 @@ struct SceneManager {
 	int numScenes;
 	struct Scene *scenes;
 
-	int currentScene;
-	struct sceneStack *sceneStack; // make enum array/stack?
-	// merge sceneStack into SceneManager?
+	int maxSize;
+	int top;
+	enum SceneNames currentScene;
+	enum SceneNames *stack;
 };
 
-void newSceneManager(struct SceneManager *sm);
-void startScene(struct SceneManager *sm, enum SceneNames scene);
+void newSceneManager(struct SceneManager *sm, int capacity);
+int size(struct SceneManager *sm);
+bool isEmpty(struct SceneManager *sm);
+bool isFull(struct SceneManager *sm);
+void pushScene(struct SceneManager *sm, enum SceneNames scene);
+void switchScene(struct SceneManager *sm, enum SceneNames scene);
+void popScene(struct SceneManager *sm);
+void deleteSceneManager(struct SceneManager *sm);
+void printStack(struct SceneManager *sm);
 
+// void startScene(struct SceneManager *sm, enum SceneNames scene);
 // void printScenes(struct Scene *scenes, int numScenes);
-
-#endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // switch scene
 
-
-
-
-
-
-
-
-
-
-
-
-/*
-// in main:
-
-Scene *scenes = {
-	{
-		.name = "boot",
-		.start = boot_start,
-		.end = boot_end,
-	},
-	{
-		.name = "title",
-	},
-	{
-		.name = "game", // for now, to test
-	},
-};
-
-initSceneManager(scenes, 3);
-
-// in boot:
-
-void boot_start()
-{
-}
-
-void boot_end()
-{
-}
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#endif
